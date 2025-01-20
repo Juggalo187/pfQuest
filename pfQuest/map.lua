@@ -38,23 +38,6 @@ end)
 local validmaps = setmetatable({},{__mode="kv"})
 local rgbcache = setmetatable({},{__mode="kv"})
 local minimap_sizes = pfDB["minimap"]
-local minimap_zoom = {
-  [0] = { [0] = 300,
-          [1] = 240,
-          [2] = 180,
-          [3] = 120,
-          [4] = 80,
-          [5] = 50,
-         },
-
-  [1] = { [0] = 466 + 2/3,
-          [1] = 400,
-          [2] = 333 + 1/3,
-          [3] = 266 + 2/6,
-          [4] = 200,
-          [5] = 133 + 1/3,
-        },
-}
 
 local unifiedcache = {}
 
@@ -90,27 +73,6 @@ local layers = {
 
 local function GetLayerByTexture(tex)
   if layers[tex] then return layers[tex] else return 1 end
-end
-
-local function minimap_indoor()
-  local tempzoom = 0
-	local state = 1
-	if GetCVar("minimapZoom") == GetCVar("minimapInsideZoom") then
-		if GetCVar("minimapInsideZoom")+0 >= 3 then
-			pfMap.drawlayer:SetZoom(pfMap.drawlayer:GetZoom() - 1)
-			tempzoom = 1
-		else
-			pfMap.drawlayer:SetZoom(pfMap.drawlayer:GetZoom() + 1)
-			tempzoom = -1
-		end
-	end
-
-	if GetCVar("minimapInsideZoom")+0 == pfMap.drawlayer:GetZoom() then
-    state = 0
-  end
-
-  pfMap.drawlayer:SetZoom(pfMap.drawlayer:GetZoom() + tempzoom)
-	return state
 end
 
 local function str2rgb(text)
@@ -194,8 +156,6 @@ pfMap.mpins = {}
 pfMap.drawlayer = Minimap
 pfMap.unifiedcache = unifiedcache
 
-pfMap.minimap_indoor = minimap_indoor
-pfMap.minimap_zoom = minimap_zoom
 pfMap.minimap_sizes = minimap_sizes
 
 pfMap.tooltip = CreateFrame("Frame" , "pfMapTooltip", GameTooltip)
@@ -933,7 +893,7 @@ function pfMap:UpdateMinimap()
   this.xPlayer, this.yPlayer, this.mZoom = xPlayer, yPlayer, mZoom
   local color = pfQuest_config["spawncolors"] == "1" and "spawn" or "title"
   local mapID = pfMap:GetMapIDByName(GetRealZoneText())
-  local mapZoom = minimap_zoom[minimap_indoor()][mZoom]
+  local mapZoom = Minimap:GetViewRadius() * 2
   local mapWidth = minimap_sizes[mapID] and minimap_sizes[mapID][1] or 0
   local mapHeight = minimap_sizes[mapID] and minimap_sizes[mapID][2] or 0
 
