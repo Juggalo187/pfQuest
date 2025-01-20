@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="..\db\enUS\items-ascension.lua"/>
+  <Include file="..\db\enUS\units-ascension.lua"/>
+  <Include file="..\db\enUS\objects-ascension.lua"/>
+  <Include file="..\db\enUS\quests-ascension.lua"/>
+  <Include file="..\db\enUS\zones-ascension.lua"/>
+  <Include file="..\db\enUS\professions-ascension.lua"/>
+</Ui>

@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="..\db\items-ascension.lua"/>
+  <Include file="..\db\units-ascension.lua"/>
+  <Include file="..\db\objects-ascension.lua"/>
+  <Include file="..\db\refloot-ascension.lua"/>
+  <Include file="..\db\quests-itemreq-ascension.lua"/>
+  <Include file="..\db\quests-ascension.lua"/>
+  <Include file="..\db\zones-ascension.lua"/>
+  <Include file="..\db\minimap-ascension.lua"/>
+  <Include file="..\db\areatrigger-ascension.lua"/>
+  <Include file="..\db\meta-ascension.lua"/>
+</Ui>
