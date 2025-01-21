@@ -3,7 +3,7 @@
 ## Author: Shagu
 ## Notes: Ascension WoW DB extension for pfQuest
 ## Version: 1.01
-## Dependencies: pfQuest-wotlk
+## Dependencies: pfQuest
 
 init\data-ascension.xml
 init\enUS-ascension.xml
