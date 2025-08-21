@@ -39,11 +39,6 @@ pfQuestCompat.QuestLogObjectivesText = QuestLogObjectivesText or QuestInfoObject
 pfQuestCompat.QuestLogQuestDescription = QuestLogQuestDescription or QuestInfoDescriptionText
 pfQuestCompat.QuestLogDescriptionTitle = QuestLogDescriptionTitle or QuestInfoDescriptionHeader
 
--- wotlk: disable builtin quest progress tooltips
-if client >= 30300 then
-  SetCVar("showQuestTrackingTooltips", 0)
-end
-
 -- vanilla+tbc+wotlk: base function to insert quest links to the chat
 pfQuestCompat.InsertQuestLink = function(questid, name)
   local questid = questid or 0
