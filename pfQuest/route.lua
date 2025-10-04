@@ -424,6 +424,58 @@ pfQuest.route.arrow:SetScript("OnUpdate", function()
       desc = string.gsub(desc, "ff33ffcc", "ffffffff")
     end
     this.description:SetText(desc.."|r.")
+    
+    -- Auto-focus quest in quest log when arrow target changes
+    if target[3] and target[3].title then
+      local questFound = false
+      
+      -- Method 1: Use pfQuest's internal questlog data
+      if pfQuest and pfQuest.questlog then
+        for questid, data in pairs(pfQuest.questlog) do
+          if data.title == target[3].title and data.qlogid then
+            SelectQuestLogEntry(data.qlogid)
+            questFound = true
+            break
+          end
+        end
+      end
+      
+      -- Method 2: Standard quest log search with aggressive matching
+      if not questFound then
+        local numEntries = GetNumQuestLogEntries()
+        local arrowTitle = string.lower(target[3].title)
+        
+        for i = 1, numEntries do
+          local questLogTitle, level, suggestedGroup, isHeader, isCollapsed, isComplete, isDaily, questID = GetQuestLogTitle(i)
+          
+          if not isHeader and questLogTitle then
+            local logTitle = string.lower(questLogTitle)
+            
+            if logTitle == arrowTitle or 
+               string.find(logTitle, arrowTitle) or 
+               string.find(arrowTitle, logTitle) then
+              SelectQuestLogEntry(i)
+              questFound = true
+              break
+            end
+          end
+        end
+      end
+      
+      -- Method 3: Quest ID matching
+      if not questFound and target[3].questid then
+        local numEntries = GetNumQuestLogEntries()
+        for i = 1, numEntries do
+          local questLogTitle, level, suggestedGroup, isHeader, isCollapsed, isComplete, isDaily, questID = GetQuestLogTitle(i)
+          
+          if not isHeader and questID == target[3].questid then
+            SelectQuestLogEntry(i)
+            questFound = true
+            break
+          end
+        end
+      end
+    end
   end
 
   -- only refresh distance text on change
@@ -436,6 +488,8 @@ pfQuest.route.arrow:SetScript("OnUpdate", function()
   -- update transparencies
   this.texture:SetAlpha(texalpha)
   this.model:SetAlpha(alpha)
+  
+  lasttarget = target
 end)
 
 pfQuest.route.arrow.texture = pfQuest.route.arrow:CreateTexture("pfQuestRouteNodeTexture", "OVERLAY")

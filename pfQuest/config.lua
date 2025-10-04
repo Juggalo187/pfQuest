@@ -109,6 +109,8 @@ pfQuest_defconfig = {
     default = "0", type = "checkbox", config = "showhighlevel" },
   { text = L["Display Event & Daily Quests"],
     default = "0", type = "checkbox", config = "showfestival" },
+  { text = "Enable Quest Completion Sound",
+	default = "0", type = "checkbox", config = "questcompleteSound" },
 
   { text = L["Map & Minimap"],
     default = nil, type = "header" },
@@ -340,14 +342,14 @@ function pfQuestConfig:CreateConfigEntries(config)
         end
 
         frame.input:SetScript("OnClick", function ()
-          if this:GetChecked() then
-            pfQuest_config[this.config] = "1"
-          else
-            pfQuest_config[this.config] = "0"
-          end
+		if this:GetChecked() then
+		pfQuest_config[this.config] = "1"
+		else
+			pfQuest_config[this.config] = "0"
+		end
 
-          pfQuest:ResetAll()
-        end)
+		pfQuest:ResetAll()
+		end)
       elseif data.type == "text" then
         -- input field
         frame.input = CreateFrame("EditBox", nil, frame)
